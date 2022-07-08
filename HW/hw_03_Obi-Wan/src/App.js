@@ -63,14 +63,15 @@ const actionPromise = (name, promise) =>
 const urlObiWan = "https://swapi.dev/api/people/10";
 const urlEpisode4 = "https://swapi.dev/api/films/1/";
 store.dispatch(actionPromise('Obi-Wan', fetch(urlObiWan)
-              .then(res => res.json())
-              .then(json => json.films.map((film) => fetch(film)))
-              .then(res => console.log(res))
-              // .then(res => Promise.all(res))
-
+              .then(obiWan => obiWan.json())
+              // .then(res => console.log(res))
+              .then(obiWan1 => obiWan1.films.map((film) => fetch(film)))
+              .then(res => Promise.all(res))
+              
+              
 ))
 
-store.dispatch(actionPromise('Episode_4', fetch(urlEpisode4).then(res => res.json())))
+// store.dispatch(actionPromise('Episode_4', fetch(urlEpisode4).then(res => res.json())))
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // const urlObiWan = "https://swapi.dev/api/people/10";
