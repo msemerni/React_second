@@ -101,13 +101,13 @@ const Episode = ({ status, payload, error }) => {
           <details className='details'>
             <summary>Films:</summary>
             <ol className='films'>
-              {payload.films.map(film => <li><strong>{film.title}</strong></li>)}
+              {payload.films.map((film) => <li key={Math.random()}><strong>{film.title}</strong></li>)}
             </ol>
           </details>
           <details className='details'>
             <summary>Starships:</summary>
             <ol className='films'>
-              {payload.starships.map(starship => <li><strong>Name: </strong>{starship.name} <br /> <strong>Model: </strong>{starship.model}</li>)}
+              {payload.starships.map(starship => <li key={Math.random()}>Name: <strong>{starship.name}</strong> <br /> Model: <strong>{starship.model}</strong></li>)}
             </ol>
           </details>
         </> : "LOADING..."
@@ -128,13 +128,13 @@ const Film = ({ status, payload, error }) => {
           <details className='details'>
             <summary>Characters:</summary>
             <ol className='characters'>
-              {payload.characters.map(character => <li><strong>{character.name}</strong></li>)}
+              {payload.characters.map(character => <li key={Math.random()}><strong>{character.name}</strong></li>)}
             </ol>
           </details>
           <details className='details'>
             <summary>Species:</summary>
             <ol className='characters'>
-              {payload.species.map(specie => <li><strong>{specie.name}</strong></li>)}
+              {payload.species.map(specie => <li key={Math.random()}><strong>{specie.name}</strong></li>)}
             </ol>
           </details>
         </> : "LOADING..."
