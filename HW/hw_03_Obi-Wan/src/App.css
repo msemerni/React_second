@@ -45,3 +45,32 @@
 .content {
   display: flex;
 }
+
+.episode {
+  padding: 10px;
+  margin: 5px;
+  background: #a89dff;
+  border-radius: 10px;
+  width: 50%;
+}
+
+.film {
+  padding: 10px;
+  margin: 5px;
+  background: #d7e694;
+  border-radius: 10px;
+  width: 50%;
+}
+
+.episode p, .film p {
+  text-align: left;
+  margin: 0 0 5px 0;
+}
+
+.details {
+  text-align: start;
+}
+
+h3 {
+  margin: 0 0 5px 0;
+}

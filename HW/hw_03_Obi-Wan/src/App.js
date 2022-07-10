@@ -11,10 +11,10 @@
 
 // import logo from './logo.svg';
 import './App.css';
-// import React, {useState} from 'react';
-import {createStore, applyMiddleware} from 'redux';
+import React, { useState } from 'react';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import {Provider, connect} from 'react-redux';
+import { Provider, connect } from 'react-redux';
 
 const Header = () => {
   return (
@@ -25,7 +25,7 @@ const Header = () => {
 }
 
 // function promiseReducer(state = {}, action) {
-function promiseReducer(state, {type, status, name, payload, error}) {
+function promiseReducer(state, { type, status, name, payload, error }) {
   if (state === undefined) {
     return {};
   }
@@ -33,7 +33,7 @@ function promiseReducer(state, {type, status, name, payload, error}) {
   if (type === "PROMISE") {
     return {
       ...state,
-      [name]: {status, payload, error}
+      [name]: { status, payload, error }
     }
   }
 
@@ -43,80 +43,151 @@ function promiseReducer(state, {type, status, name, payload, error}) {
 const store = createStore(promiseReducer, applyMiddleware(thunk));
 store.subscribe(() => console.log(store.getState()))
 
-const actionPending = (name) => ({type: "PROMISE", status: "PENDING", name});
-const actionFulfilled = (name, payload) => ({type: "PROMISE", status: "FULFILLED", name, payload});
-const actionRejected = (name, error) => ({type: "PROMISE", status: "REJECTED", name, error});
+const actionPending = (name) => ({ type: "PROMISE", status: "PENDING", name });
+const actionFulfilled = (name, payload) => ({ type: "PROMISE", status: "FULFILLED", name, payload });
+const actionRejected = (name, error) => ({ type: "PROMISE", status: "REJECTED", name, error });
 
 const actionPromise = (name, promise) =>
-    async dispatch => {
-        dispatch(actionPending(name))
-        try{
-            let payload = await promise
-            dispatch(actionFulfilled(name, payload))
-            return payload
-        }
-        catch(err){
-            dispatch(actionRejected(name, err))
-        }
+  async dispatch => {
+    dispatch(actionPending(name))
+    try {
+      const payload = await promise
+      dispatch(actionFulfilled(name, payload))
+      return payload
     }
+    catch (err) {
+      dispatch(actionRejected(name, err))
+    }
+  }
 
 const urlObiWan = "https://swapi.dev/api/people/10";
 const urlEpisode4 = "https://swapi.dev/api/films/1/";
-store.dispatch(actionPromise('Obi-Wan', fetch(urlObiWan)
-              .then(obiWan => obiWan.json())
-              // .then(res => console.log(res))
-              .then(obiWan1 => obiWan1.films.map((film) => fetch(film)))
-              .then(res => Promise.all(res))
-              
-              
-))
 
-// store.dispatch(actionPromise('Episode_4', fetch(urlEpisode4).then(res => res.json())))
+store.dispatch(actionPromise('ObiWan', fetchData(urlObiWan)));
+store.dispatch(actionPromise('Episode4', fetchData(urlEpisode4)));
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-// const urlObiWan = "https://swapi.dev/api/people/10";
-// const fourthPart = "https://swapi.dev/api/films/1/";
+async function fetchData(url) {
+  const data = await fetch(url);
+  const dataJSON = await data.json();
+  const resultJSON = {};
+  for (const objectItem of Object.entries(dataJSON)) {
+    if (!Array.isArray(objectItem[1])) {
+      resultJSON[objectItem[0]] = objectItem[1];
+    } else {
+      const requests = objectItem[1].map(async url => {
+        const res = await fetch(url);
+        return res;
+      })
+      // await Promise.all(requests)
+      //   .then(responses => Promise.all(responses.map(result => result.json())))
+      //   .then(json => resultJSON[objectItem[0]] = json);
+      const responses = await Promise.all(requests);
+      const json = await Promise.all(responses.map(result => result.json()));
+      resultJSON[objectItem[0]] = json;
+    }
+  }
 
-// const Fetch = (url_) => {
-  
-//   fetch(url_);
+  return resultJSON;
+}
 
-//   async function fetch  (url) {
-//     if (!url) {
-//       console.log('Url is missed');
-//       return;
-//     }
-//     try {
-//       const response = await fetch(url);
-//       if (!response.ok) {
-//         throw new Error(`Error: ${response.statusText}`);
-//       }
-//       const data = await response.json();
-//       console.log(data);
-//       return data;
-//     } catch (error) {
-//       console.log(error);
-//     }
+const Episode = ({ status, payload, error }) => {
+  return (
+    <div className='episode'>
+      {status === 'FULFILLED' ?
+        <>
+          <h3>{payload.name}</h3>
+          <p>Birth year: <strong>{payload.birth_year}</strong></p>
+          <p>Gender: <strong>{payload.gender}</strong></p>
+          <details className='details'>
+            <summary>Films:</summary>
+            <ol className='films'>
+              {payload.films.map(film => <li><strong>{film.title}</strong></li>)}
+            </ol>
+          </details>
+          <details className='details'>
+            <summary>Starships:</summary>
+            <ol className='films'>
+              {payload.starships.map(starship => <li><strong>Name: </strong>{starship.name} <br /> <strong>Model: </strong>{starship.model}</li>)}
+            </ol>
+          </details>
+        </> : "LOADING..."
+      }
+      {status === 'REJECTED' && <><strong>ERROR</strong>: {error}<br /></>}
+    </div>
+  )
+}
 
-//     return (
-//       <div>fff</div>
-//     )
-//   };
-//   return (
-//     <div>fff</div>
-//   )
-// }
+const Film = ({ status, payload, error }) => {
+  return (
+    <div className='film'>
+      {status === 'FULFILLED' ?
+        <>
+          <h3>{payload.title}</h3>
+          <p>Release date: <strong>{payload.release_date}</strong></p>
+          <p>Director: <strong>{payload.director}</strong></p>
+          <details className='details'>
+            <summary>Characters:</summary>
+            <ol className='characters'>
+              {payload.characters.map(character => <li><strong>{character.name}</strong></li>)}
+            </ol>
+          </details>
+          <details className='details'>
+            <summary>Species:</summary>
+            <ol className='characters'>
+              {payload.species.map(specie => <li><strong>{specie.name}</strong></li>)}
+            </ol>
+          </details>
+        </> : "LOADING..."
+      }
+      {status === 'REJECTED' && <><strong>ERROR</strong>: {error}<br /></>}
+    </div>
+  )
+}
 
- 
+const CObiWan = connect(state => state.ObiWan || {})(Episode);
+const CEpisode4 = connect(state => state.Episode4 || {})(Film);
+
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <div className='content'>
-        {/* <Fetch url={urlObiWan}/> */}
+    <Provider store={store}>
+      <div className="App">
+        <Header />
+        <div className='content'>
+          <CObiWan />
+          <CEpisode4 />
+        </div>
       </div>
-    </div>
+    </Provider>
   );
 }
 
 export default App;
+
+
+
+
+
+
+//// не работает:
+// function fetchData (url) {
+//   fetch(url)
+//   .then(obiWan => obiWan.json())
+//   .then(json => {
+//     const resultJSON = {};
+//     for (const objectItem of Object.entries(json)) {
+//       if (!Array.isArray(objectItem[1])) {
+//         resultJSON[objectItem[0]] = objectItem[1];
+//       } else {
+//         const requests = objectItem[1].map(url => {
+//           const res = fetch(url)
+//           return res;
+//         })
+//         Promise.all(requests)
+//           .then(responses => Promise.all(responses.map(result => result.json())))
+//           .then(json => resultJSON[objectItem[0]] = json);
+//       }
+//     }
+//     // console.log(resultJSON);
+//     return resultJSON;
+//   })
+// }
