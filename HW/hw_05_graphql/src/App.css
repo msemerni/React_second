@@ -6,21 +6,39 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 40px;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: App-logo-spin infinite 1s linear;
   }
+  .Loader {
+    animation: App-logo-spin infinite 3s ease-in;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 10px 0;
+}
+
+.LoaderContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Loader {
+  height: 100px;
 }
 
 .App-header {
   background-color: #adadad;
-  min-height: 10vh;
+  height: 80px;
   display: flex;
-  flex-direction: column;
+  flex-grow: 1;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
@@ -43,36 +61,35 @@
 .content {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
-.categoriesContainer {
-  width: 25%;
+.categoriesContainer, .goodContainer {
+  width: 250px;
+  height: 350px;
+  padding: 10px;
 }
 
 .categories {
   background: #4db2ce;
-  padding: 10px;
-  margin: 10px;
   height: 100%;
   border-radius: 15px;
-}
-
-.goodContainer {
-  width: 25%;
 }
 
 .details {
   cursor: pointer;
 }
 
+.goods {
+  text-align: left;
+}
+
 .good {
   background: #ccdedd;
-  padding: 10px;
-  margin: 10px;
-  height: 100%;
   display: flex;
   flex-direction: column;
   border-radius: 15px;
+  height: 100%;
 }
 
 .price {
@@ -80,7 +97,7 @@
 }
 
 .imgGood {
-  width: 100px;
+  height: 150px;
 }
 
 .card_button_container {
@@ -98,6 +115,7 @@
   border: 0;
   align-self: center;
   cursor: pointer;
+  margin: 10px;
 }
 
 .card_button:hover {
