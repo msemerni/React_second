@@ -6,7 +6,7 @@
 // 5) отдать этот промис в store.dispatch(actionPromise('orders', gql(.................)))
 // 6) придумать отображение истории заказов в React
 // 7) используя connect соединить историю заказов из redux с компонентом реакт, который рисует историю заказов.
-
+ 
 import logo from './logo.svg';
 import './App.scss';
 import React, { useState } from 'react';
