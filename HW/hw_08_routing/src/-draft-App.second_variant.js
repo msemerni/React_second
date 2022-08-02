@@ -1,4 +1,3 @@
-// HW_06-HW_07__graphql_cats_orders
 // 1) сделать заказ товаров через GraphiQL
 // 2) допилить функцию gql, что бы она при наличии токена в localStorage.authToken 
 //    добавляла заголовок Authorization со значением "Bearer " + токен 
@@ -7,7 +6,7 @@
 // 5) отдать этот промис в store.dispatch(actionPromise('orders', gql(.................)))
 // 6) придумать отображение истории заказов в React
 // 7) используя connect соединить историю заказов из redux с компонентом реакт, который рисует историю заказов.
- 
+
 import logo from './logo.svg';
 import './App.scss';
 import React, { useState } from 'react';
@@ -22,13 +21,11 @@ const Header = () => {
         <CLogin />
       </div>
       <header className="App-header">
-        {/* изменить вывод имени пользователя в зависимости от наличия токена: ?? */}
-        {/* {localStorage.authToken ? <p>Hi</p> : <p>Unregistered</p>} */} 
+        {/* <div>{!!store.getState().Login ? <Logo /> : "Unregistered user"}</div> */}
         <Logo/>
-        <a href='http://shop-roles.node.ed.asmer.org.ua/graphql' target='blank'>GraphQL222</a>
+        <a href='http://shop-roles.node.ed.asmer.org.ua/graphql' target='blank'>GraphQL</a>
         <LoginForm onLogin={({login, password}) => 
           store.dispatch(queryLogin(login, password, "Login")
-          /* изменить вывод имени пользователя в зависимости от наличия токена: ?? */
           // localStorage.authToken ? {store.dispatch(queryLogin(login, password, "Login")} : <p>"Login First"</p>
         )}/>
       </header>
@@ -55,7 +52,7 @@ const LoginForm = ({onLogin}) => {
                type="text" 
                placeholder='msemerni'
                onInput={(e) => {setLogin(e.target.value)}}
-               // не работает что ниже в комментах?:
+               // не работает что ниже в комментах:
               //  {login.length >= 3 && style={{backgroundColor: 'lightgreen'}}} />
               //  style={login.length >= 3 ? {backgroundColor: 'lightred'} : {backgroundColor: 'lightgreen'} }
                />
@@ -75,7 +72,7 @@ const LoginForm = ({onLogin}) => {
         <button type="button" 
                 disabled={(!login || !password)}
                 onClick={() => {
-                  if(window.confirm("Really want to Logout?")) {
+                  if(window.confirm("Really want Logout?")) {
                     localStorage.removeItem("authToken");
                     {setLogin(null)} // задисейблить кнопки и очистить инпуты если Logout ?
                     document.forms['loginForm'].reset();
@@ -131,7 +128,7 @@ const actionPromise = (name, promise) =>
     }
   }
 
-  // const originalFetch = fetch;
+// const originalFetch = fetch;
 // fetch = (url, params={headers:{}}) => { 
 //     params.headers.Authorization = "Bearer " + localStorage.authToken
 //     return originalFetch(url, params)
@@ -152,6 +149,38 @@ const actionPromise = (name, promise) =>
 
 const BACKEND_URL = "http://shop-roles.node.ed.asmer.org.ua/";
 const BACKEND_URL_QUERY = "http://shop-roles.node.ed.asmer.org.ua/graphql";
+
+///////////////////////////////////////////////////////////////////////////
+// const getLogin = url =>
+//     (query, variables) => fetch(url, {
+//         method: 'POST',
+//         headers: {
+//             "Content-Type": "application/json",
+//             ...(localStorage.authToken ? {"Authorization": "Bearer " + localStorage.authToken} : {})
+//         },
+//         body: JSON.stringify({query, variables})
+//     }).then(res => res.json())
+//         .then(data => {
+//             if (data.data){
+//                 return Object.values(data.data)[0] 
+//             } 
+//             else throw new Error(JSON.stringify(data.errors))
+//         })
+// // query log($login: String, $password: String) {
+// //   login (login: $login, password: $password)
+// // }
+// const actionAuthLogin = token => 
+//   (dispatch, getState) => {
+//     dispatch({type: "AUTH_LOGIN", token});
+//     const {auth} = store.getState();
+//   if(auth){
+//     localStorage.authToken = auth.token;
+//   }
+//     // сделать dispatch логин
+//     // проверить что токен прокатил
+//     // сохранить его в localStorage.authToken
+//   }
+///////////////////////////////////////////////////////////////////////////
 
 const queryLogin = (login, password, promiseName) => {
   const queryPromise = gql(BACKEND_URL_QUERY,
@@ -250,11 +279,21 @@ const ShowLogin = ({ status, token, error }) => {
 
     const parsedToken = jwtDecode(token);
 
+    // if (!!store.getState().Login && status === 'FULFILLED') {
+    //   return (
+    //     <div className='login'>
+    //       {!!parsedToken ? <p>Welcome, <b>{parsedToken.sub.login}</b></p> : <p><b>Wrong login/password</b></p>}
+    //     </div>
+    //   )
+    // }
+
     if (!!store.getState().Login && status === 'FULFILLED') {
       if (!!parsedToken) {
         localStorage.authToken = token;
         return (
           <div className='login'>
+            {/* <Header> <Logo></Logo> </Header> */} 
+            {/*  как удалить существующий хедер?? */ }
             <p>Welcome, <b>{parsedToken.sub.login}</b></p>
           </div>
         )
@@ -268,6 +307,11 @@ const ShowLogin = ({ status, token, error }) => {
 }
 
 const ShowCategory = ({ status, categoryData, error }) => {
+  // let category;
+  // if(status === 'FULFILLED') {
+  //   category = payload.data.CategoryFindOne;
+  //   console.log("PAYLOAD: ", category);
+  // }
   return (
     <div className='categoriesContainer'>
       {status === 'FULFILLED' ?
@@ -316,6 +360,7 @@ const ShowGood = ({ status, goodInfo, error }) => {
 
 const ShowOrders = ({ status, orders, error }) => {
   if (localStorage.authToken) {
+    // status === 'FULFILLED' ? console.log("orders ::: ", orders) : console.log("orders ::: PeNdInG");
     let sum = 0;
     return (
       <div className='ordersBox'>
@@ -391,6 +436,7 @@ const CIPhoneX = connect(state => ({status: state.GoodIPhoneX?.status,
 const CShowOrders = connect(state => ({status: state.AllOrders?.status, 
                                       orders: state.AllOrders?.payload?.data?.OrderFind, 
                                       error: state.AllOrders?.error}))(ShowOrders);
+
 
 function App() {
   return (

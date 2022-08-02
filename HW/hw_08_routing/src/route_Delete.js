@@ -172,10 +172,12 @@ const PageCategory = ({match: {params: {_id}}, onIdChange, category}) => {
     return (
         category ? 
         <div className='PageCategory'>
+            <div>
             <h1>{category.name}</h1>
             <div>
             {!!category.goods?.length ? category.goods.map(good => <GoodCard key={good._id} good={good}/>) : <>No goods in this category</>}
             </div>
+          </div>
         </div> : <>Loading</>
     )
 }
@@ -190,7 +192,7 @@ const PageGood = ({match: {params: {_id}}}) =>
 const Content = () =>
 <div className='Content'>
     <Route path="/category/:_id" component={CPageCategory} />
-    <Route path="/good/:_id" component={PageGood} />
+    {/* <Route path="/good/:_id" component={PageGood} /> */}
 </div>
 
 const App = () =>

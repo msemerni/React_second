@@ -1,0 +1,28 @@
+<form action="/upload" method="post" enctype="multipart/form-data" id='form'>
+  <input type="file" name="photo" id='photo'/>
+</form>
+
+<script>
+    photo.onchange = async () => {
+        fetch('/upload', {
+            method: "POST",
+            headers: localStorage.authToken ? {Authorization: 'Bearer ' + localStorage.authToken} : {},
+            body: new FormData(form)
+        })
+    }
+</script>
+
+
+<form action="/track" method="post" enctype="multipart/form-data" id='trackForm'>
+  <input type="file" name="track" id='track'/>
+</form>
+
+<script>
+    track.onchange = async () => {
+        fetch('/track', {
+            method: "POST",
+            headers: localStorage.authToken ? {Authorization: 'Bearer ' + localStorage.authToken} : {},
+            body: new FormData(trackForm)
+        })
+    }
+</script>
