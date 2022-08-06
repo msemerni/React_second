@@ -1,0 +1,297 @@
+
+// .LoginForm {
+//   margin: 20px;
+//   padding: 20px;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // .LoginForm, .RegisterForm {
+// //   display: flex;
+// //   flex-direction: column;
+// //   width: 200px;
+// //   border: solid #000 2px;
+// //   margin: 10px;
+// // }
+
+// // #root {
+// //   display: flex;
+// //   // flex-direction: column;
+
+// //   .LeftMenu {
+// //     width: 25%;
+// //   }
+
+// // .Content {
+// //   .PageCategory {
+// //     div {
+// //       display: flex;
+// //       flex-wrap: wrap;
+// //       justify-content: space-around;
+// //     }
+// //     h1 {
+// //       width: 100%;
+// //     }
+// //     .GoodCard {
+// //       img {
+// //         max-height: 200px;
+// //       }
+// //     }
+// //   }
+// // }
+// // }
+
+// .App {
+//   text-align: center;
+//   display: flex;
+//   flex-wrap: wrap;
+//   flex-direction: column;
+// }
+
+
+// .App-logo {
+//   height: 70px;
+//   pointer-events: none;
+// }
+
+// @media (prefers-reduced-motion: no-preference) {
+//   .App-logo {
+//     animation: App-logo-spin infinite 20s linear;
+//   }
+//   .Loader {
+//     animation: App-logo-spin infinite 3s ease-in;
+//   }
+// }
+
+// h1, h2, h3, h4, h5, h6 {
+//   margin: 0 0 10px 0;
+// }
+
+// .header_form {
+//   // background: #4db2ce;
+//   // z-index: 1000;
+//   // position: fixed;
+//   // width: 200px;
+//   // top: 50%;
+//   // left: 50%;
+//   // transform: translate(-50%, -50%);
+
+//   flex-wrap: wrap;
+//   flex-direction: column;
+//   align-items: flex-end;
+// }
+
+// .header_form label {
+//   font-size: 12px;
+// }
+
+// .header_form button {
+//   align-self: center;
+//   width: 88px;
+// }
+
+// /* .hide {
+//   visibility: hidden;
+// }
+
+// .show {
+//   visibility: hidden;
+// } */
+
+// .LoaderContainer {
+//   position: fixed;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
+
+// .Loader {
+//   height: 100px;
+// }
+
+// .welcome {
+//   background-color: #adadad;
+//   p {
+//     margin: 0;
+//   }
+// }
+
+// .App-header {
+//   background-color: #adadad;
+//   height: 80px;
+//   display: flex;
+//   flex-grow: 1;
+//   align-items: center;
+//   justify-content: space-between;
+//   font-size: calc(10px + 2vmin);
+//   color: rgb(0, 0, 0);
+//   padding: 10px;
+// }
+
+// .App-link {
+//   color: #61dafb;
+// }
+
+// @keyframes App-logo-spin {
+//   from {
+//     transform: rotate(0deg);
+//   }
+//   to {
+//     transform: rotate(360deg);
+//   }
+// }
+
+// .buttonShowOrders {
+//   background: #4269cb;
+//   border: 0;
+//   cursor: pointer;
+//   height: 30px;
+//   border-radius: 10px;
+//   margin: 10px;
+// }
+
+// .ordersBox {
+//   display: flex;
+//   flex-wrap: wrap;
+//   width: 75%;
+//   flex-grow: 1;
+//   padding: 10px;
+//   align-self: center;
+
+//   .orders {
+//     border: 2px solid #33477a;
+//     padding: 10px;
+
+//     .table_orders {
+//       table-layout: fixed;
+//       width: 100%;
+//       border-collapse: collapse;
+//       border: 2px solid #33477a;
+//       margin-bottom: 20px;
+
+//       th, td {
+//         border: 1px solid #000;
+
+//         .imgGoodOrder{
+//           height: 50px;
+//         }
+//         // .imgGoodOrder:hover{
+//         //   height: 150px;
+//         // }
+//       }
+      
+//     }
+//   }
+// }
+
+// .content {
+//   display: flex;
+//   // flex-wrap: wrap;
+//   // justify-content: center;
+//     .LeftMenu {
+//     width: 25%;
+//     text-align: left;
+//       ul {
+//         list-style: none;
+//         a {
+//           text-decoration: none;
+//         }
+//       }
+//     }
+//     .Content {
+//       .PageCategory {
+//         div {
+//           display: flex;
+//           flex-wrap: wrap;
+//           // justify-content: space-around;
+//         }
+//         h1 {
+//           width: 100%;
+//         }
+//         .GoodCard {
+//           img {
+//             max-height: 200px;
+//           }
+//         }
+//       }
+//     }
+// }
+
+// .goodLink {
+//   text-decoration: none;
+//   color: #000;
+//   width: 100%;
+// }
+
+// .categoriesContainer, .goodContainer {
+//   width: 250px;
+//   min-height: 350px;
+//   padding: 10px;
+// }
+
+// .goodContainerDetailed {
+//   background: #ecebf3;
+// }
+
+// .categories {
+//   background: #4db2ce;
+//   height: 100%;
+//   border-radius: 15px;
+// }
+
+// .details {
+//   cursor: pointer;
+// }
+
+// .goods {
+//   text-align: left;
+// }
+
+// .good {
+//   background: #ccdedd;
+//   display: flex;
+//   flex-direction: column;
+//   border-radius: 15px;
+//   height: 100%;
+// }
+
+// .price {
+//   margin-bottom: 5px;
+// }
+
+// .imgGood {
+//   height: 150px;
+// }
+
+// .card_button_container {
+//   flex-grow: 1;
+//   display: flex;
+//   justify-content: flex-end;
+//   flex-direction: column;
+// }
+
+// .card_button {
+//   border-radius: 10px;
+//   height: 2em;
+//   background: #4269cb;
+//   width: 100px;
+//   border: 0;
+//   align-self: center;
+//   cursor: pointer;
+//   margin: 10px;
+// }
+
+// .card_button:hover {
+//   background: #7095f3;
+// }
