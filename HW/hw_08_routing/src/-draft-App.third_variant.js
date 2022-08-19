@@ -246,7 +246,7 @@ const GoodCardDetailed = ({ good: { name, images, _id, price, description } }) =
                 alt={name}></img>
             <p>{description}</p>
             <div className='card_button_container'>
-                <button className='card_button'>Write message</button>
+                <button className='card_button'>Buy</button>
             </div>
         </div>
     )
